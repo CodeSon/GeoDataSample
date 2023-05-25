@@ -1,26 +1,27 @@
+import pandas as pd
 import  random
+
 """
 Generate sample longitude and Latitude sample data for northern Stockholm.
-Args:
-num_samples (int): The number of samples to generate
-Returns:
-list: A list of tuples representing latitude and longitude cordinates
+and put them in an excel sheet
 """
+def generate_lat_long(samples):
 
-def generate_latitiude():
-    return round(random.uniform(59.35, 59.48), 6)
+    coordinates = []
+    for _ in range(samples):
+# Generate latitude within the range of 59.35 to 59.48
+        latitude = random.uniform(59.35, 59.48)
+        longitude = random.uniform(17.88, 18.14)
+        coordinates.append((latitude, longitude))
+    return coordinates
 
-def generate_longitude():
-    return round(random.uniform(17.88, 18.14), 6)
-# Number of sample cordinates to generate
-num_samples = 15
 
-sample_data = []
+num_samples = 50 
+coordinates = generate_lat_long(num_samples)
 
-for _ in range(num_samples):
-    lat = generate_latitiude()
-    lon = generate_longitude()
-    sample_data.append((lat, lon))
+#Creating dataframe to store the coordinates
+df = pd.DataFrame(coordinates, columns=['Latitude', 'Longitude'])
 
-for data_point in sample_data:
-    print(f"Latitude: {data_point[0]}, Longitude: {data_point[1]}")
+filePath = 'coordinates.xlsx'
+df.to_excel(filePath, index=False) # excluding the index column  in the saved file
+print(coordinates)
